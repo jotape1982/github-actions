@@ -1,0 +1,25 @@
+name: Build & Deploy
+run-name: Building and Deploying Bonfire website on Production  🚀
+on: workflow_dispatch
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        
+      - name: use node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install --prefix source/frontend
+
+      - name: Build Next.js application
+        run: npm --prefix source/frontend run export

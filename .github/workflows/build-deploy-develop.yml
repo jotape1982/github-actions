@@ -1,5 +1,5 @@
-name: Build Next
-run-name: Build Next 🚀
+name: Build & Deploy
+run-name: Building and Deploying Bonfire website on Develop  🚀
 on: workflow_dispatch
 
 permissions:
@@ -22,19 +22,20 @@ jobs:
         run: npm install --prefix source/frontend
 
       - name: Build Next.js application
-        run: npm --prefix source/frontend run build
+        run: npm --prefix source/frontend run export
 
       - name: Auth with Service Account
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: LIST files
-        run: ls './source/frontend/out/'
+      - name: Upload to Google Cloud Storage
+        run: |
+          gcloud storage rsync ./source/frontend/out/ gs://new-fortress-energy.appspot.com/ --recursive - --delete-unmatched-destination-objects
 
-      - name: Deploying files
-        uses: 'google-github-actions/upload-cloud-storage@v2'
-        with:
-          path: './source/frontend/out/'
-          destination: 'new-fortress-energy.appspot.com/'
-          parent: false
+      #- name: Deploying files
+      #  uses: 'google-github-actions/upload-cloud-storage@v2'
+      #  with:
+      #    path: './source/frontend/out/'
+      #    destination: 'bonfire-website-development/'
+      #    parent: false
