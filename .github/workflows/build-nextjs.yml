@@ -19,10 +19,10 @@ jobs:
           node-version: '20.x'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install  --prefix source/frontend
 
       - name: Build Next.js application
-        run: npm run build
+        run: npm  --prefix source/frontend run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -38,4 +38,4 @@ jobs:
       - name: Deploy via GCS
         run: |
           gsutil -m rm -rf gs://new-fortress-energy.appspot.com/* 
-          gsutil -m cp -r * gs://new-fortress-energy.appspot.com/
+          gsutil -m cp -r ./out/* gs://new-fortress-energy.appspot.com/
