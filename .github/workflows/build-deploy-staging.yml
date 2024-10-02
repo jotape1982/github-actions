@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: Build & Deploy Staging
 run-name: Building and Deploying Bonfire website on Staging  🚀
 on: workflow_dispatch
 

@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: Build & Deploy Production
 run-name: Building and Deploying Bonfire website on Production  🚀
 on: workflow_dispatch
 
@@ -22,7 +22,7 @@ jobs:
         run: npm install --prefix source/frontend
 
       - name: Build Next.js application
-        run: npm --prefix source/frontend run export
+        run: npm --prefix source/frontend run Build
 
       - name: Auth with Service Account
         uses: 'google-github-actions/auth@v2'
