@@ -22,7 +22,7 @@ jobs:
         run: npm install --prefix source/frontend
 
       - name: Build Next.js application
-        run: npm --prefix source/frontend run Build
+        run: npm --prefix source/frontend run build
 
       - name: Auth with Service Account
         uses: 'google-github-actions/auth@v2'

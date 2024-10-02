@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: Pull Request
 run-name: Building and Deploying Bonfire website on Production  🚀
 on: workflow_dispatch
 
@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-        
+
       - name: use node.js
         uses: actions/setup-node@v3
         with:
@@ -22,4 +22,4 @@ jobs:
         run: npm install --prefix source/frontend
 
       - name: Build Next.js application
-        run: npm --prefix source/frontend run export
+        run: npm --prefix source/frontend run build
