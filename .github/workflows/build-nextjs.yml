@@ -30,7 +30,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./source/frontend/out
       
       - uses: google-github-actions/setup-gcloud@v0
         with:
@@ -41,4 +41,4 @@ jobs:
       - name: Deploy via GCS
         run: |
           gsutil -m rm -rf gs://new-fortress-energy.appspot.com/* 
-          gsutil -m cp -r ./out/* gs://new-fortress-energy.appspot.com/
+          gsutil -m cp -r ./source/frontend/* gs://new-fortress-energy.appspot.com/
