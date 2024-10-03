@@ -1,8 +1,6 @@
 name: Build & Deploy Develop
 run-name: Building and Deploying Bonfire website on Develop  🚀
 on: workflow_dispatch
-env:
-  PATH_TO_FRONTEND: "source/frontend"
 
 permissions:
   id-token: write
@@ -21,22 +19,22 @@ jobs:
           node-version: '20.x'
 
       - name: Install dependencies
-        run: npm install --prefix ${PATH_TO_FRONTEND}
+        run: npm install --prefix source/frontend
 
       - name: Build Next.js application
         run: | 
-          echo LEVER_TOKEN=${{ secrets.LEVER_TOKEN }} > ${PATH_TO_FRONTEND}/.env
-          echo NEXT_PUBLIC_LEVER_ENDPOINT=${{ vars.NEXT_PUBLIC_LEVER_ENDPOINT }} >> ${PATH_TO_FRONTEND}/.env
-          echo DATOCMS_READONLY_API_TOKEN=${{ vars.NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN }} >> ${PATH_TO_FRONTEND}/.env
-          echo RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ secrets.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }} >> ${PATH_TO_FRONTEND}/.env
-          cat ${PATH_TO_FRONTEND}/.env
-          npm --prefix ${PATH_TO_FRONTEND} run build
+          echo LEVER_TOKEN=${{ secrets.LEVER_TOKEN }} > source/frontend/.env
+          echo NEXT_PUBLIC_LEVER_ENDPOINT=${{ vars.NEXT_PUBLIC_LEVER_ENDPOINT }} >> source/frontend/.env
+          echo NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN=${{ vars.NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN }} >> source/frontend/.env
+          echo RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ secrets.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }} >> source/frontend/.env
+          cat source/frontend/.env
+          npm --prefix source/frontend run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact
-          path: ./${PATH_TO_FRONTEND}/out/
+          path: ./source/frontend/out/
 
   deploy:
     runs-on: ubuntu-latest
