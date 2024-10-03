@@ -1,5 +1,5 @@
-name: Build & Deploy Develop
-run-name: Building and Deploying Bonfire website on Develop  🚀
+name: Build & Deploy
+run-name: Building and Deploying Bonfire website on   🚀
 on: workflow_dispatch
 
 permissions:
@@ -48,6 +48,7 @@ jobs:
 
       - name: Upload to Google Cloud Storage
         run: |
+          printenv
           gcloud storage rm -R 'gs://${{ vars.BUCKET_NAME }}/**'
           gcloud storage cp -R './source/frontend/out/' 'gs://${{ vars.BUCKET_NAME }}/'
 
