@@ -47,7 +47,7 @@ jobs:
 
       - name: Upload to Google Cloud Storage
         run: |
-          echo ${{ env.BUCKET_NAME }}
+          echo ${{ vars.BUCKET_NAME }}
           echo 'gs://${{ env.BUCKET_NAME }}/**'
           printenv
           echo "gs://${{ env.BUCKET_NAME }}/**"
