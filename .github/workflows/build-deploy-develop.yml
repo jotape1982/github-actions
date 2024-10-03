@@ -1,6 +1,8 @@
 name: Build & Deploy Develop
 run-name: Building and Deploying Bonfire website on Develop  🚀
 on: workflow_dispatch
+env:
+  PATH_TO_FRONTEND: "source/frontend"
 
 permissions:
   id-token: write
@@ -9,8 +11,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      PATH_TO_FRONTEND: "source/frontend"
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
