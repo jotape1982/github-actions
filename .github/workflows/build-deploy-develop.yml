@@ -58,4 +58,4 @@ jobs:
       - name: Upload to Google Cloud Storage
         run: |
           gcloud storage rm -R 'gs://${{ vars.BUCKET_NAME }}/**'
-          gcloud storage cp -R './source/frontend/out/' 'gs://${{ vars.BUCKET_NAME }}/'
+          gcloud storage cp -R './source/frontend/out/**' 'gs://${{ vars.BUCKET_NAME }}/'
