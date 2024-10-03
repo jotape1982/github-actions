@@ -11,12 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
-        with:
-          ref: stage        
+        uses: actions/checkout@v4
 
       - name: use node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
@@ -26,17 +24,29 @@ jobs:
       - name: Build Next.js application
         run: npm --prefix source/frontend run build
 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: ./source/frontend/out/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: staging
+    steps:
       - name: Auth with Service Account
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: LIST files
-        run: ls './source/frontend/out/'
-
-      - name: Deploying files
-        uses: 'google-github-actions/upload-cloud-storage@v2'
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
         with:
-          path: './source/frontend/out/'
-          destination: 'bonfire-website-staging/'
-          parent: false
+          name: build-artifact
+          path: ./source/frontend/out/
+
+      - name: Upload to Google Cloud Storage
+        run: |
+          gcloud storage rm -R 'gs://${{ vars.BUCKET_NAME }}/**'
+          gcloud storage cp -R './source/frontend/out/' 'gs://${{ vars.BUCKET_NAME }}/'

@@ -1,5 +1,5 @@
-name: Build & Deploy Production
-run-name: Building and Deploying Bonfire website on Production  🚀
+name: Build & Deploy Develop
+run-name: Building and Deploying Bonfire website on Develop  🚀
 on: workflow_dispatch
 
 permissions:
@@ -33,7 +33,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment: production
+    environment: development
     steps:
       - name: Auth with Service Account
         uses: 'google-github-actions/auth@v2'
