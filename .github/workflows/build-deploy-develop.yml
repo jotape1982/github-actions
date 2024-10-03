@@ -20,18 +20,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci --prefix source/frontend
+          npm ci --prefix source/frontend \
           npm --prefix source/frontend run postinstall
 
       - name: Build Next.js application
         run: | 
-          echo LEVER_TOKEN=${{ secrets.LEVER_TOKEN }} > source/frontend/.env
-          echo NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN=${{ secrets.NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN }} >> source/frontend/.env
-          echo NEXT_PUBLIC_DEBUG_WEB_VITALS=${{ secrets.NEXT_PUBLIC_DEBUG_WEB_VITALS }} >> source/frontend/.env
-          echo NEXT_PUBLIC_LEVER_ENDPOINT=${{ vars.NEXT_PUBLIC_LEVER_ENDPOINT }} >> source/frontend/.env
-          echo RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ secrets.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }} >> source/frontend/.env
+          echo "LEVER_TOKEN=${{ secrets.LEVER_TOKEN }}" > source/frontend/.env
+          echo "NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN=${{ secrets.NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN }}" >> source/frontend/.env
+          echo "NEXT_PUBLIC_DEBUG_WEB_VITALS=${{ vars.NEXT_PUBLIC_DEBUG_WEB_VITALS }}" >> source/frontend/.env
+          echo "NEXT_PUBLIC_LEVER_ENDPOINT=${{ vars.NEXT_PUBLIC_LEVER_ENDPOINT }}" >> source/frontend/.env
+          echo "RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }}" >> source/frontend/.env
           cat source/frontend/.env
-          npm --prefix source/frontend run export
+          npm --prefix source/frontend run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
