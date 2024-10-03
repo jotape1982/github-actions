@@ -31,6 +31,10 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Upload to Google Cloud Storage
         run: |
           gcloud storage rm -R --force gs://staging.new-fortress-energy.appspot.com/*
