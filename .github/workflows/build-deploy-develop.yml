@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: use node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
@@ -23,6 +23,12 @@ jobs:
 
       - name: Build Next.js application
         run: npm --prefix source/frontend run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: ./source/frontend/out/
 
   deploy:
     runs-on: ubuntu-latest
@@ -33,7 +39,13 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./source/frontend/out/
+
       - name: Upload to Google Cloud Storage
         run: |
-          gcloud storage rm -R "gs://test-rexona-fit.appspot.com/**"
-          gcloud storage cp -R "./source/frontend/out/" "gs://test-rexona-fit.appspot.com/"
+          gcloud storage rm -R "gs://$BUCKET_NAME/**"
+          gcloud storage cp -R "./source/frontend/out/" "gs://$BUCKET_NAME/"
