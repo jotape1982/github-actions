@@ -48,8 +48,7 @@ jobs:
       - name: Upload to Google Cloud Storage
         run: |
           echo ${{ vars.BUCKET_NAME }}
-          echo 'gs://${{ env.BUCKET_NAME }}/**'
-          printenv
-          echo "gs://${{ env.BUCKET_NAME }}/**"
-          gcloud storage rm -R 'gs://${{ env.BUCKET_NAME }}/**'
-          gcloud storage cp -R './source/frontend/out/' 'gs://${{ env.BUCKET_NAME }}/'
+          echo 'gs://${{ vars.BUCKET_NAME }}/**'
+          echo "gs://${{ vars.BUCKET_NAME }}/**"
+          gcloud storage rm -R 'gs://${{ vars.BUCKET_NAME }}/**'
+          gcloud storage cp -R './source/frontend/out/' 'gs://${{ vars.BUCKET_NAME }}/'
