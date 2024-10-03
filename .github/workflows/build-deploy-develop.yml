@@ -47,5 +47,5 @@ jobs:
 
       - name: Upload to Google Cloud Storage
         run: |
-          gcloud storage rm -R "gs://${{ BUCKET_NAME }}/**"
-          gcloud storage cp -R "./source/frontend/out/" "gs://${{ BUCKET_NAME }}/"
+          gcloud storage rm -R "gs://${{ env.BUCKET_NAME }}/**"
+          gcloud storage cp -R "./source/frontend/out/" "gs://${{ env.BUCKET_NAME }}/"
