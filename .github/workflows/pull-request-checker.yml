@@ -1,6 +1,8 @@
 name: Pull Request
-run-name: Building and Deploying Bonfire website on Production  🚀
-on: workflow_dispatch
+run-name: Running Install and Build 🤖
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   id-token: write
