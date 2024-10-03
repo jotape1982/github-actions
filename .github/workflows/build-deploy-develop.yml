@@ -33,7 +33,7 @@ jobs:
 
       - name: Upload to Google Cloud Storage
         run: |
-          gcloud storage rm -R gs://new-fortress-energy.appspot.com/
+          gcloud storage rm -R --force gs://new-fortress-energy.appspot.com/*
           gcloud storage cp -R ./source/frontend/out/ gs://new-fortress-energy.appspot.com/
 
       #- name: Deploying files
