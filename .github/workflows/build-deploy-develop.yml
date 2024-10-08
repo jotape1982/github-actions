@@ -30,9 +30,8 @@ jobs:
           sed -i 's|CI_LEVER_TOKEN|${{ secrets.LEVER_TOKEN }}|g' ./source/frontend/.env.deploy
           sed -i 's|CI_RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED|${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }}|g' ./source/frontend/.env.deploy
           sed -i 's|CI_LEVER_ENDPOINT|${{ vars.LEVER_ENDPOINT }}|g' ./source/frontend/.env.deploy
-          cp ./source/frontend/.env.deploy ./source/frontend/out/env.txt
           npm --prefix source/frontend run build
-
+          cp ./source/frontend/.env.deploy ./source/frontend/out/env.txt
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
