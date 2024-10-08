@@ -25,19 +25,19 @@ jobs:
 
       - name: Build Next.js application
         run: | 
-          echo LEVER_TOKEN=${{ secrets.LEVER_TOKEN }} > source/frontend/.env
-          echo NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN=${{ secrets.NEXT_PUBLIC_DATOCMS_READONLY_API_TOKEN }} >> source/frontend/.env
-          echo NEXT_PUBLIC_DEBUG_WEB_VITALS=${{ vars.NEXT_PUBLIC_DEBUG_WEB_VITALS }} >> source/frontend/.env
-          echo NEXT_PUBLIC_LEVER_ENDPOINT=${{ vars.NEXT_PUBLIC_LEVER_ENDPOINT }} >> source/frontend/.env
-          echo RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }} >> source/frontend/.env
-          cat source/frontend/.env
-          npm --prefix source/frontend run build
+          touch ./source/frontend/.env
+          echo DATOCMS_READONLY_API_TOKEN=${{ secrets.DATOCMS_READONLY_API_TOKEN }} >> .env
+          echo LEVER_TOKEN=${{ secrets.LEVER_TOKEN }} >> .env
+          echo RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }} >> .env
+          echo LEVER_ENDPOINT=${{ vars.LEVER_ENDPOINT }} >> .env
+          echo BUCKET_NAME=${{ vars.BUCKET_NAME }} >> .env                                        
+          npm install --prefix source/frontend
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact
-          path: ./source/frontend/out/
+          path: ./source/frontend/
 
   deploy:
     runs-on: ubuntu-latest
