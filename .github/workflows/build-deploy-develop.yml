@@ -9,6 +9,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: development    
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -31,8 +32,9 @@ jobs:
           sed -i 's/#LEVER_ENDPOINT/${{ vars.LEVER_ENDPOINT }}/g' ./source/frontend/.env.deploy
           sed -i 's/#BUCKET_NAME/${{ vars.BUCKET_NAME }}/g' ./source/frontend/.env.deploy
           cp ./source/frontend/.env.deploy ./source/frontend/.env
-          npm install --prefix source/frontend
+          npm --prefix source/frontend run build
           cat ./source/frontend/.env
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
