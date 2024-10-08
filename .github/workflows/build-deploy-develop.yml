@@ -26,11 +26,11 @@ jobs:
 
       - name: Build Next.js application
         run: | 
-          sed -i 's/CI_DATOCMS_READONLY_API_TOKEN/${{ secrets.DATOCMS_READONLY_API_TOKEN }}/g' ./source/frontend/.env.deploy
-          sed -i 's/CI_LEVER_TOKEN/${{ secrets.LEVER_TOKEN }}/g' ./source/frontend/.env.deploy
-          sed -i 's/CI_RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED/${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }}/g' ./source/frontend/.env.deploy
-          sed -i 's/CI_LEVER_ENDPOINT/${{ vars.LEVER_ENDPOINT }}/g' ./source/frontend/.env.deploy
-          sed -i 's/CI_BUCKET_NAME/${{ vars.BUCKET_NAME }}/g' ./source/frontend/.env.deploy
+          sed -i 's|CI_DATOCMS_READONLY_API_TOKEN|***|g' ./source/frontend/.env.deploy
+          sed -i 's|CI_LEVER_TOKEN|***|g' ./source/frontend/.env.deploy
+          sed -i 's|CI_RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED|false|g' ./source/frontend/.env.deploy
+          sed -i 's|CI_LEVER_ENDPOINT|https://api.lever.co/v1/postings|g' ./source/frontend/.env.deploy
+          sed -i 's|CI_BUCKET_NAME|bonfire-website-development|g' ./source/frontend/.env.deploy
           cp ./source/frontend/.env.deploy ./source/frontend/.env
           npm --prefix source/frontend run build
           cat ./source/frontend/.env
