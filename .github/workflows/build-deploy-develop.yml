@@ -25,19 +25,19 @@ jobs:
 
       - name: Build Next.js application
         run: | 
-          touch ./source/frontend/.env
-          echo DATOCMS_READONLY_API_TOKEN=${{ secrets.DATOCMS_READONLY_API_TOKEN }} >> ./source/frontend/.env
-          echo LEVER_TOKEN=${{ secrets.LEVER_TOKEN }} >> ./source/frontend/.env
-          echo RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }} >> ./source/frontend/.env
-          echo LEVER_ENDPOINT=${{ vars.LEVER_ENDPOINT }} >> ./source/frontend/.env
-          echo BUCKET_NAME=${{ vars.BUCKET_NAME }} >> ./source/frontend/.env                                        
+          sed -i 's/#DATOCMS_READONLY_API_TOKEN/${{ secrets.DATOCMS_READONLY_API_TOKEN }}/g' ./source/frontend/.env.deploy
+          sed -i 's/#LEVER_TOKEN/${{ secrets.LEVER_TOKEN }}/g' ./source/frontend/.env.deploy
+          sed -i 's/#RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED/${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }}/g' ./source/frontend/.env.deploy
+          sed -i 's/#LEVER_ENDPOINT/${{ vars.LEVER_ENDPOINT }}/g' ./source/frontend/.env.deploy
+          sed -i 's/#BUCKET_NAME/${{ vars.BUCKET_NAME }}/g' ./source/frontend/.env.deploy
+          cp ./source/frontend/.env.deploy ./source/frontend/.env
           npm install --prefix source/frontend
-
+          cat ./source/frontend/.env
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact
-          path: ./source/frontend
+          path: ./source/frontend/out/
 
   deploy:
     runs-on: ubuntu-latest
