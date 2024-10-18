@@ -1,0 +1,39 @@
+name: Pull Request checker
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: use node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      
+      - name: Check for approvals
+        uses: hmarr/auto-approve-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          approvals: 1
+
+      - name: Secret Scanner
+        uses: secret-scanner/action@0.0.2
+
+      - name: Install dependencies
+        run: npm install --prefix source/frontend
+
+      - name: Build Next.js application
+        run: npm --prefix source/frontend run build
+
+      - name: PR Status Check
+        run: |
+          if [ "${{ job.status }}" == "failure" ]; then
+            echo "El job ha fallado. Bloqueando el merge."
+            exit 1
+          fi        
