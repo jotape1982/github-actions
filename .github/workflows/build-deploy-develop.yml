@@ -26,12 +26,12 @@ jobs:
 
       - name: Build Next.js application
         run: | 
-          sed -i 's|CI_DATOCMS_READONLY_API_TOKEN|${{ secrets.DATOCMS_READONLY_API_TOKEN }}|g' ./source/frontend/.env.deploy
-          sed -i 's|CI_LEVER_TOKEN|${{ secrets.LEVER_TOKEN }}|g' ./source/frontend/.env.deploy
-          sed -i 's|CI_RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED|${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }}|g' ./source/frontend/.env.deploy
-          sed -i 's|CI_LEVER_ENDPOINT|${{ vars.LEVER_ENDPOINT }}|g' ./source/frontend/.env.deploy
+          export DATOCMS_READONLY_API_TOKEN=${{ secrets.DATOCMS_READONLY_API_TOKEN }}
+          export LEVER_TOKEN=${{ secrets.LEVER_TOKEN }}
+          export RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }}
+          export LEVER_ENDPOINT=${{ vars.LEVER_ENDPOINT }}
+          printenv
           npm --prefix source/frontend run build
-          cp ./source/frontend/.env.deploy ./source/frontend/out/env.txt
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
