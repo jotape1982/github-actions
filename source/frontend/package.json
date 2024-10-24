@@ -10,6 +10,7 @@
     "postinstall": "next lint"
   },
   "dependencies": {
+    "gsap": "npm:@gsap/business@3.11.5",
     "react": "^18",
     "react-dom": "^18",
     "next": "14.2.14"
