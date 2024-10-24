@@ -21,7 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          echo "//npm.greensock.com/:_authToken=${{ secrets.GSAP_NPM_TOKEN }}" > source/frontend/.npmrc 
+          npm config set @gsap:registry https://npm.greensock.com/
+          npm config set //npm.greensock.com/:_authToken ${{ secrets.GSAP_NPM_TOKEN }}
           cd source/frontend
           npm install @gsap/business
           
