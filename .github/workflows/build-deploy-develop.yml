@@ -24,6 +24,7 @@ jobs:
           echo "@gsap:registry=https://npm.greensock.com" >> ~/.npmrc
           echo "//npm.greensock.com/:_authToken=${{ secrets.GSAP_NPM_TOKEN }}" >> ~/.npmrc
           cd source/frontend
+          npm install @gsap/business
           npm install
           
       - name: Build Next.js application
