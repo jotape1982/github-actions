@@ -24,7 +24,7 @@ jobs:
           echo "@gsap:registry=https://npm.greensock.com" >> ~/.npmrc
           echo "//npm.greensock.com/:_authToken=${{ secrets.GSAP_NPM_TOKEN }}aaaa" >> ~/.npmrc
           cd source/frontend
-          curl -o ./out/business-3.12.5.tgz https://npm.greensock.com/@gsap/business/-/business-3.12.5.tgz
+          #curl -o ./out/business-3.12.5.tgz https://npm.greensock.com/@gsap/business/-/business-3.12.5.tgz
 
           #npm install @gsap/business
           #npm install
