@@ -37,7 +37,7 @@ jobs:
           export LEVER_ENDPOINT=${{ vars.LEVER_ENDPOINT }}
           cd ./source/frontend/
           mkdir out
-          curl -o ./source/frontend/out/business-3.12.5.tgz https://npm.greensock.com/@gsap/business/-/business-3.12.5.tgz
+          curl -o ./out/business-3.12.5.tgz https://npm.greensock.com/@gsap/business/-/business-3.12.5.tgz
 
 
           #npm --prefix source/frontend run build
