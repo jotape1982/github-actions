@@ -1,4 +1,4 @@
-name: Build & Deploy Develop
+wname: Build & Deploy Develop
 run-name: Building and Deploying Bonfire website on Develop  🚀
 on: workflow_dispatch
 
@@ -35,6 +35,8 @@ jobs:
           export LEVER_TOKEN=${{ secrets.LEVER_TOKEN }}
           export RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }}
           export LEVER_ENDPOINT=${{ vars.LEVER_ENDPOINT }}
+          cd ./source/frontend/
+          mkdir out
           curl -o ./source/frontend/out/business-3.12.5.tgz https://npm.greensock.com/@gsap/business/-/business-3.12.5.tgz
 
 
