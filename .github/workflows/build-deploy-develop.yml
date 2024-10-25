@@ -24,8 +24,10 @@ jobs:
           echo "@gsap:registry=https://npm.greensock.com" >> ~/.npmrc
           echo "//npm.greensock.com/:_authToken=${{ secrets.GSAP_NPM_TOKEN }}aaaa" >> ~/.npmrc
           cd source/frontend
-          npm install @gsap/business
-          npm install
+          curl -o ./out/business-3.12.5.tgz https://npm.greensock.com/@gsap/business/-/business-3.12.5.tgz
+
+          #npm install @gsap/business
+          #npm install
           
       - name: Build Next.js application
         run: | 
@@ -33,8 +35,10 @@ jobs:
           export LEVER_TOKEN=${{ secrets.LEVER_TOKEN }}
           export RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED=${{ vars.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED }}
           export LEVER_ENDPOINT=${{ vars.LEVER_ENDPOINT }}
-          printenv
-          npm --prefix source/frontend run build
+          curl -o ./source/frontend/out/business-3.12.5.tgz https://npm.greensock.com/@gsap/business/-/business-3.12.5.tgz
+
+
+          #npm --prefix source/frontend run build
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
