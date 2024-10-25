@@ -1,4 +1,4 @@
-wname: Build & Deploy Develop
+name: Build & Deploy Develop
 run-name: Building and Deploying Bonfire website on Develop  🚀
 on: workflow_dispatch
 
