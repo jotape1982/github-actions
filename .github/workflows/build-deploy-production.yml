@@ -1,10 +1,11 @@
 name: Build & Deploy Production
 run-name: Building and Deploying Bonfire website on Production  🚀
-on: workflow_dispatch
-#on:
-#  push:
-#    branches:
-#      - 'releases/*'
+#on: workflow_dispatch
+on:
+  push:
+    branches:
+      - 'develop' # releases/*
+      - 'releases/*'
 
 permissions:
   id-token: write
