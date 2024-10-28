@@ -46,20 +46,20 @@ jobs:
         with:
           name: build-artifact
           path: ./source/frontend/out/
-
-      - name: Auth with Service Account
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
   
   deploy-to-staging:
-    name: Deploy to staging (https://bonfire-website-staging-942309315387.us-central1.run.app)
+    name: Deploy to staging
     runs-on: ubuntu-latest
     needs: build
     environment:
       name: staging
       url: https://bonfire-website-staging-942309315387.us-central1.run.app
     steps:
+      - name: Auth with Service Account
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -73,7 +73,7 @@ jobs:
           gcloud storage cp -R './' 'gs://${{ vars.BUCKET_NAME }}/'
 
   deploy-to-production:
-    name: Deploy to Production (https://bonfire-website-production-942309315387.us-central1.run.app)
+    name: Deploy to Production
     runs-on: ubuntu-latest
     needs: deploy-to-staging
     if: github.ref == 'refs/heads/releases/*'
@@ -81,6 +81,11 @@ jobs:
       name: production
       url: https://bonfire-website-production-942309315387.us-central1.run.app
     steps:
+      - name: Auth with Service Account
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
