@@ -78,7 +78,8 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     needs: deploy-to-staging
-    if: github.ref == 'refs/heads/release/*'
+    
+    
     environment:
       name: production
       url: https://bonfire-website-production-942309315387.us-central1.run.app
